@@ -5,15 +5,23 @@
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_middleware.ts";
 import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/personalInfo.ts";
-import * as $3 from "./routes/webauthn/register.ts";
+import * as $2 from "./routes/logout.ts";
+import * as $3 from "./routes/personalInfo.ts";
+import * as $4 from "./routes/webauthn/add.ts";
+import * as $5 from "./routes/webauthn/login.ts";
+import * as $6 from "./routes/webauthn/register.ts";
+import * as $7 from "./routes/webauthn/response.ts";
 
 const manifest = {
   routes: {
     "./routes/_middleware.ts": $0,
     "./routes/index.tsx": $1,
-    "./routes/personalInfo.ts": $2,
-    "./routes/webauthn/register.ts": $3,
+    "./routes/logout.ts": $2,
+    "./routes/personalInfo.ts": $3,
+    "./routes/webauthn/add.ts": $4,
+    "./routes/webauthn/login.ts": $5,
+    "./routes/webauthn/register.ts": $6,
+    "./routes/webauthn/response.ts": $7,
   },
   islands: {},
   baseUrl: import.meta.url,

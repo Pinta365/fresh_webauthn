@@ -2,7 +2,7 @@
 /* exported loadMainContainer, checkIfLoggedIn */
 
 const renderMainContainer = (response) => {
-    
+    console.log('test', response);
 	// Update name
 	$("#name").text(response.name);
     

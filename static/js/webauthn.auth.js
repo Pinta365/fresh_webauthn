@@ -2,6 +2,7 @@
 /* exported register, login */
 
 const getMakeCredentialsChallenge = (formBody, additional) => {
+	console.log(formBody);
 	return fetch(additional ? "webauthn/add" : "webauthn/register", {
 		method: "POST",
 		credentials: "include",

@@ -9,6 +9,7 @@
     "fresh_session": "https://deno.land/x/fresh_session@0.1.8/mod.ts",
     "filedb": "https://deno.land/x/filedb@0.0.6/mod.ts",
     "base64": "https://deno.land/x/b64@1.1.25/src/base64.js",
-    "fido2lib": "https://deno.land/x/fido2@3.3.3/dist/main.js"
+    "fido2lib": "https://deno.land/x/fido2@3.3.3/dist/main.js",
+    "parsec": "https://deno.land/x/parsec@0.1.1/mod.ts"
   }
 }

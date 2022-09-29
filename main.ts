@@ -5,7 +5,11 @@
 /// <reference lib="deno.ns" />
 
 import "https://deno.land/std@0.157.0/dotenv/load.ts";
+import { config } from "base_config";
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
-await start(manifest);
+await start(manifest, {
+  port: +config.port,
+  hostname: new URL(config.origin).hostname,
+});

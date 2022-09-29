@@ -1,8 +1,8 @@
 import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
-import { config } from "../../config.ts";
-import { database, IUser } from "../../db/db.ts";
-import { token } from "../../utils/token.ts";
+import { config } from "base_config";
+import { database, IUser } from "database";
+import { token } from "token_utils";
 import { WithSession } from "fresh_session";
 
 export type Data = { session: Record<string, string> };

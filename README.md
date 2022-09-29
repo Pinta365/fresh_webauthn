@@ -2,7 +2,6 @@
 
 ## Based on/ported from https://github.com/Hexagon/webauthn-skeleton/tree/server/deno
 
-
 # fresh project
 
 ### Usage
@@ -14,4 +13,3 @@ deno task start
 ```
 
 This will watch the project directory and restart as necessary.
-

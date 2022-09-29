@@ -1,9 +1,9 @@
 import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
-import { config } from "../../config.ts";
-import { database, IUser } from "../../db/db.ts";
-import { Fido2 } from "../../utils/fido2.ts";
-import { username as username_utils } from "../../utils/username.ts";
+import { config } from "base_config";
+import { database, IUser } from "database";
+import { Fido2 } from "fido2_utils";
+import { username as username_utils } from "username_utils";
 import { WithSession } from "fresh_session";
 
 const f2l = new Fido2(

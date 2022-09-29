@@ -6,58 +6,61 @@
  * @param  {Object} pubKeyCred
  * @return {Object}            - JSON encoded publicKeyCredential
  */
- const publicKeyCredentialToJSON = (pubKeyCred) => {
-	/* ----- DO NOT MODIFY THIS CODE ----- */
-	if(pubKeyCred instanceof Array) {
-		const arr = [];
-		for(const i of pubKeyCred)
-			arr.push(publicKeyCredentialToJSON(i));
+const publicKeyCredentialToJSON = (pubKeyCred) => {
+  /* ----- DO NOT MODIFY THIS CODE ----- */
+  if (pubKeyCred instanceof Array) {
+    const arr = [];
+    for (const i of pubKeyCred) {
+      arr.push(publicKeyCredentialToJSON(i));
+    }
 
-		return arr;
-	}
+    return arr;
+  }
 
-	if(pubKeyCred instanceof ArrayBuffer) {
-		return base64.fromArrayBuffer(pubKeyCred,true);
-	}
+  if (pubKeyCred instanceof ArrayBuffer) {
+    return base64.fromArrayBuffer(pubKeyCred, true);
+  }
 
-	if(pubKeyCred instanceof Object) {
-		const obj = {};
+  if (pubKeyCred instanceof Object) {
+    const obj = {};
 
-		for (const key in pubKeyCred) {
-			obj[key] = publicKeyCredentialToJSON(pubKeyCred[key]);
-		}
+    for (const key in pubKeyCred) {
+      obj[key] = publicKeyCredentialToJSON(pubKeyCred[key]);
+    }
 
-		return obj;
-	}
+    return obj;
+  }
 
-	return pubKeyCred;
+  return pubKeyCred;
 };
 
 /**
  * Decodes arrayBuffer required fields.
  */
 const preformatMakeCredReq = (makeCredReq) => {
-	makeCredReq.challenge = base64.toArrayBuffer(makeCredReq.challenge,true);
-	makeCredReq.user.id = base64.toArrayBuffer(makeCredReq.user.id,true);
+  makeCredReq.challenge = base64.toArrayBuffer(makeCredReq.challenge, true);
+  makeCredReq.user.id = base64.toArrayBuffer(makeCredReq.user.id, true);
 
-	// Decode id of each excludeCredentials
-	if (makeCredReq.excludeCredentials) {
-		makeCredReq.excludeCredentials = makeCredReq.excludeCredentials.map((e) => { return { id: base64.toArrayBuffer(e.id, true), type: e.type };});
-	}
+  // Decode id of each excludeCredentials
+  if (makeCredReq.excludeCredentials) {
+    makeCredReq.excludeCredentials = makeCredReq.excludeCredentials.map((e) => {
+      return { id: base64.toArrayBuffer(e.id, true), type: e.type };
+    });
+  }
 
-	return makeCredReq;
+  return makeCredReq;
 };
 
 /**
  * Decodes arrayBuffer required fields.
  */
 const preformatGetAssertReq = (getAssert) => {
-	getAssert.challenge = base64.toArrayBuffer(getAssert.challenge,true);
-    
-	// Allow any credential, this will be handled later
-	for(const allowCred of getAssert.allowCredentials) {
-		allowCred.id = base64.toArrayBuffer(allowCred.id,true);
-	}
+  getAssert.challenge = base64.toArrayBuffer(getAssert.challenge, true);
 
-	return getAssert;
+  // Allow any credential, this will be handled later
+  for (const allowCred of getAssert.allowCredentials) {
+    allowCred.id = base64.toArrayBuffer(allowCred.id, true);
+  }
+
+  return getAssert;
 };

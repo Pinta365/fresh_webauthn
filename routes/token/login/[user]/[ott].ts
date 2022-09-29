@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import { username as username_utils } from "../../../../utils/username.ts";
-import { database, IUser } from "../../../../db/db.ts";
-import { token } from "../../../../utils/token.ts";
+import { username as username_utils } from "username_utils";
+import { database, IUser } from "database";
+import { token } from "token_utils";
 import { WithSession } from "fresh_session";
 
 export type Data = { session: Record<string, string> };
@@ -52,30 +52,29 @@ export const handler: Handlers<Data, WithSession> = {
       return new Response(JSON.stringify(resp), { status: 200 });
     }
 
-// Validate token
-if (token.validate(usernameClean, oneTimeToken, userInfo.oneTimeToken )) {
+    // Validate token
+    if (token.validate(usernameClean, oneTimeToken, userInfo.oneTimeToken)) {
+      // Log in user
+      session.set("username", usernameClean);
+      session.set("loggedIn", true);
 
-    // Log in user
-    session.set("username", usernameClean);
-    session.set("loggedIn", true);
+      // Remove token
+      await users.updateOne({ userName: usernameClean }, {
+        oneTimeToken: undefined,
+      });
 
-    // Remove token
-    await users.updateOne({userName: usernameClean}, {oneTimeToken: undefined});
-
-    // Success
-    //return Response.redirect(config.baseUrl); //
-    return new Response("", {
+      // Success
+      //return Response.redirect(config.baseUrl); //
+      return new Response("", {
         status: 307,
         headers: { Location: "/" },
       });
-} else {
-    const resp = {
+    } else {
+      const resp = {
         "status": "failed",
         "message": "Invalid token",
       };
       return new Response(JSON.stringify(resp), { status: 200 });
-}
-
-
+    }
   },
 };

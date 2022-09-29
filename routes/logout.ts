@@ -3,7 +3,7 @@ import { WithSession } from "fresh_session";
 
 export type Data = { session: Record<string, string> };
 
-export const handler: Handlers< Data, WithSession> = {
+export const handler: Handlers<Data, WithSession> = {
   GET(_req, ctx) {
     const { session } = ctx.state;
 

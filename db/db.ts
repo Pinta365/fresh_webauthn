@@ -1,31 +1,31 @@
-import { FileDB, Document } from "filedb";
-import { IToken } from "../utils/token.ts";
+import { Document, FileDB } from "filedb";
+import { IToken } from "token_utils";
 
 interface IAuthenticator extends Document {
-    credId: string,
-    publicKey: string,
-    type: string,
-    transports: string[],
-    counter: number,
-    created: Date,
+  credId: string;
+  publicKey: string;
+  type: string;
+  transports: string[];
+  counter: number;
+  created: Date;
 }
 
 // main.ts
 interface IUser extends Document {
-    userName?: string;
-    name?: string;
-    registered?: boolean;
-    id?: string;
-    authenticators?: IAuthenticator[];
-    oneTimeToken?: IToken;
-    recoveryEmail?: string;
-}   
+  userName?: string;
+  name?: string;
+  registered?: boolean;
+  id?: string;
+  authenticators?: IAuthenticator[];
+  oneTimeToken?: IToken;
+  recoveryEmail?: string;
+}
 
 // https://deno.land/x/filedb@0.0.6
 const database = new FileDB({ rootDir: "./db/data", isAutosave: true });
 
-// Example 
+// Example
 // const users = await database.getCollection<IUser>("users"); // implicitly create and get User collection
 
 export { database };
-export type { IUser, IAuthenticator };
+export type { IAuthenticator, IUser };

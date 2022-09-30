@@ -20,3 +20,4 @@ jobs:
         with:
           project: "pinta365-fresh-webauthn"
           entrypoint: "./main.ts" # TODO: update entrypoint
+          import-map: "./import-map.json"

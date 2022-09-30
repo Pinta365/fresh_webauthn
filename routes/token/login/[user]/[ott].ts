@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import { username as username_utils } from "username_utils";
+import { username as username_utils } from "utils/username.ts";
 import { database, IUser } from "database";
-import { token } from "token_utils";
+import { token } from "utils/token.ts";
 import { WithSession } from "fresh_session";
 
 export type Data = { session: Record<string, string> };

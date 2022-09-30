@@ -2,9 +2,9 @@ import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
 import { config } from "base_config";
 import { database, IUser } from "database";
-import { Fido2 } from "fido2_utils";
+import { Fido2 } from "utils/fido2.ts";
 import { base64 } from "base64";
-import { username as username_utils } from "username_utils";
+import { username as username_utils } from "utils/username.ts";
 import { WithSession } from "fresh_session";
 
 const userNameMaxLenght = 25;

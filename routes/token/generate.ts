@@ -2,7 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
 import { config } from "base_config";
 import { database, IUser } from "database";
-import { token } from "token_utils";
+import { token } from "utils/token.ts";
 import { WithSession } from "fresh_session";
 
 export type Data = { session: Record<string, string> };

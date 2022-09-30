@@ -1,11 +1,11 @@
 import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
+import { WithSession } from "fresh_session";
 import { config } from "base_config";
 import { database, IAuthenticator, IUser } from "database";
-import { Fido2, IAssertionExpectations } from "fido2_utils";
 import { base64 } from "base64";
-import { username as username_utils } from "username_utils";
-import { WithSession } from "fresh_session";
+import { username as username_utils } from "utils/username.ts";
+import { Fido2, IAssertionExpectations } from "utils/fido2.ts";
 
 const f2l = new Fido2(
   config.rpId,

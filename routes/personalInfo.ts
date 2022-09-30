@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { json, ReqWithBody } from "parsec";
-import { token } from "token_utils";
+import { token } from "utils/token.ts";
 import { database, IUser } from "database";
 import { WithSession } from "fresh_session";
 

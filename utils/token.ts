@@ -1,5 +1,5 @@
 import { base64 } from "base64";
-import { username } from "username_utils";
+import { username } from "utils/username.ts";
 
 interface IToken {
   username: string;

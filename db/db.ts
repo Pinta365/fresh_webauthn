@@ -1,5 +1,5 @@
 import { Document, FileDB } from "filedb";
-import { IToken } from "token_utils";
+import { IToken } from "utils/token.ts";
 
 interface IAuthenticator extends Document {
   credId: string;

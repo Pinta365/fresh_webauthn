@@ -11,11 +11,8 @@
     "base64": "https://deno.land/x/b64@1.1.25/src/base64.js",
     "fido2lib": "https://deno.land/x/fido2@3.3.3/dist/main.js",
     "parsec": "https://deno.land/x/parsec@0.1.1/mod.ts",
-
     "base_config": "./config.ts",
     "database": "./db/db.ts",
-    "fido2_utils": "./utils/fido2.ts",
-    "username_utils": "./utils/username.ts",
-    "token_utils": "./utils/token.ts"
+    "utils/": "./utils/"
   }
 }

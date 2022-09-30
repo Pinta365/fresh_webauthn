@@ -1,4 +1,4 @@
-## 🚧🚧🚧 Under construction 🚧🚧🚧
+## 🚧🚧 Under construction 🚧🚧
 
 ## Based on/ported from https://github.com/Hexagon/webauthn-skeleton/tree/server/deno
 

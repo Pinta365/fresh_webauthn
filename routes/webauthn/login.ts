@@ -28,7 +28,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Request missing username field!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Get user info
@@ -41,7 +41,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": `User ${usernameClean} does not exist!`,
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     if (
@@ -52,7 +52,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": `User ${usernameClean} can not log in!`,
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const assertionOptions = await f2l.login();
@@ -76,6 +76,6 @@ export const handler: Handlers<Data, WithSession> = {
 
     session.set("allowCredentials", allowCredentials);
 
-    return new Response(JSON.stringify(assertionOptions), { status: 200 });
+    return Response.json(assertionOptions);
   },
 };

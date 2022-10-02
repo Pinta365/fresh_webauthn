@@ -19,7 +19,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Access denied",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     } else {
       const username = await session.get("username");
       const users = await database.getCollection<IUser>("users");
@@ -43,7 +43,7 @@ export const handler: Handlers<Data, WithSession> = {
         "oneTimeToken": tokenInfo,
         "recoveryEmail": userInfo.recoveryEmail,
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
   },
 };

@@ -33,7 +33,7 @@ export const handler: Handlers<Data, WithSession> = {
         "message":
           "Response missing one or more of id/rawId/response/type fields, or type is not public-key!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Get user info
@@ -77,7 +77,7 @@ export const handler: Handlers<Data, WithSession> = {
       session.set("loggedIn", true);
 
       const resp = { "status": "ok" };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     } else if (webauthnResp.response.authenticatorData !== undefined) {
       /* This is get assertion */
       //result = utils.verifyAuthenticatorAssertionResponse(webauthnResp, database.users[request.session.username].authenticators);
@@ -124,7 +124,7 @@ export const handler: Handlers<Data, WithSession> = {
         session.set("loggedIn", true);
 
         const resp = { "status": "ok" };
-        return new Response(JSON.stringify(resp), { status: 200 });
+        return Response.json(resp);
 
         // Authentication failed
       } else {
@@ -132,14 +132,14 @@ export const handler: Handlers<Data, WithSession> = {
           "status": "failed",
           "message": "Can not authenticate signature!",
         };
-        return new Response(JSON.stringify(resp), { status: 200 });
+        return Response.json(resp);
       }
     } else {
       const resp = {
         "status": "failed",
         "message": "Can not authenticate signature!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
   },
 };

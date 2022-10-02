@@ -13,6 +13,6 @@ export const handler: Handlers<Data, WithSession> = {
     const resp = {
       "status": "ok",
     };
-    return new Response(JSON.stringify(resp), { status: 200 });
+    return Response.json(resp);
   },
 };

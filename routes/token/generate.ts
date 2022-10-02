@@ -17,7 +17,7 @@ export const handler: Handlers<Data, WithSession> = {
       const resp = {
         "status": "failed",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const username = session.get("username"),
@@ -30,7 +30,7 @@ export const handler: Handlers<Data, WithSession> = {
       const resp = {
         "status": "failed",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const tokenEncoded = token.encode(tokenValidator.token);
@@ -47,6 +47,6 @@ export const handler: Handlers<Data, WithSession> = {
       "url": config.baseUrl + "/token/login/" + username + "/" +
         tokenEncoded,
     };
-    return new Response(JSON.stringify(resp), { status: 200 });
+    return Response.json(resp);
   },
 };

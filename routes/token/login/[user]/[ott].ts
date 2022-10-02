@@ -19,7 +19,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Invalid token",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Check username
@@ -29,7 +29,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Invalid user",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Check that user exists
@@ -40,7 +40,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": `User ${usernameClean} does not exist!`,
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Check that token validator exists
@@ -49,7 +49,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Invalid token",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     // Validate token
@@ -74,7 +74,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Invalid token",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
   },
 };

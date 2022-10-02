@@ -26,7 +26,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Request missing name or username field!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     if (!session.get("loggedIn")) {
@@ -34,7 +34,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "User not logged in!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const usernameClean = username_utils.clean(session.get("username"));
@@ -44,7 +44,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Invalid username!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const users = await database.getCollection<IUser>("users");
@@ -64,6 +64,6 @@ export const handler: Handlers<Data, WithSession> = {
       return { id: e.credId, type: e.type };
     });
     // Respond with credentials
-    return new Response(JSON.stringify(challengeMakeCred), { status: 200 });
+    return Response.json(challengeMakeCred);
   },
 };

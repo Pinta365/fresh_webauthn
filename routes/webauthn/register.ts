@@ -44,7 +44,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Request missing name or username field!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
     const usernameClean = username_utils.clean(username);
 
@@ -53,7 +53,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": "Request missing name or username field!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     if (usernameClean.length > userNameMaxLenght) {
@@ -63,7 +63,7 @@ export const handler: Handlers<Data, WithSession> = {
           " too long. Max username lenght is " + userNameMaxLenght +
           " characters!",
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const users = await database.getCollection<IUser>("users");
@@ -74,7 +74,7 @@ export const handler: Handlers<Data, WithSession> = {
         "status": "failed",
         "message": `Username ${usernameClean} already exists`,
       };
-      return new Response(JSON.stringify(resp), { status: 200 });
+      return Response.json(resp);
     }
 
     const id = randomBase64URLBuffer(32);
@@ -100,8 +100,6 @@ export const handler: Handlers<Data, WithSession> = {
     session.set("username", usernameClean);
 
     // Respond with credentials
-    return new Response(JSON.stringify(challengeMakeCred), {
-      status: 200,
-    });
+    return Response.json(challengeMakeCred);
   },
 };

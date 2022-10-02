@@ -80,7 +80,7 @@ const generateToken = () => {
 };
 
 const checkIfLoggedIn = () => {
-  return fetch("isLoggedIn", { credentials: "include" })
+  return fetch("isloggedin", { credentials: "include" })
     .then((response) => response.json())
     .then((response) => {
       if (response.status === "ok") {
@@ -123,3 +123,12 @@ $("#button-login").click(() => {
 $("#button-generate-token").click(() => {
   generateToken();
 });
+
+// Check if already logged in
+$(document).ready(() => {
+  checkIfLoggedIn()
+    .then((response) => {
+      if (response)
+        return loadMainContainer()
+    })
+})

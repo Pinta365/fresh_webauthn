@@ -1,5 +1,4 @@
 import { Handlers } from "$fresh/server.ts";
-import { json, ReqWithBody } from "parsec";
 import { config } from "base_config";
 import { database, IUser } from "database";
 import { Fido2 } from "utils/fido2.ts";
@@ -32,21 +31,17 @@ export type Data = { session: Record<string, string> };
 
 export const handler: Handlers<Data, WithSession> = {
   async POST(req, ctx) {
-    const body: ReqWithBody = req;
-    await json(body);
+    const body = await req.json();
     const { session } = ctx.state;
 
-    const username: string = body.parsedBody?.username as string;
-    const name: string = body.parsedBody?.name as string;
-
-    if (!username || !name) {
+    if (!body.username || !body.name) {
       const resp = {
         "status": "failed",
         "message": "Request missing name or username field!",
       };
       return Response.json(resp);
     }
-    const usernameClean = username_utils.clean(username);
+    const usernameClean = username_utils.clean(body.username);
 
     if (!usernameClean) {
       const resp = {
@@ -81,7 +76,7 @@ export const handler: Handlers<Data, WithSession> = {
 
     await users.insertOne({
       userName: usernameClean,
-      name: name,
+      name: body.name,
       registered: false,
       id: id,
       authenticators: [],

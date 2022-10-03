@@ -10,6 +10,7 @@ interface IAssertionExpectations {
   prevCounter: number;
   userHandle: string;
 }
+
 class Fido2 {
   f2l: any;
 

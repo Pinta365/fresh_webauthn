@@ -1,5 +1,4 @@
 import { Handlers } from "$fresh/server.ts";
-import { json, ReqWithBody } from "parsec";
 import { config } from "base_config";
 import { database, IUser } from "database";
 import { Fido2 } from "utils/fido2.ts";
@@ -17,11 +16,10 @@ export type Data = { session: Record<string, string> };
 
 export const handler: Handlers<Data, WithSession> = {
   async POST(req, ctx) {
-    const body: ReqWithBody = req;
-    await json(body);
+    const body = await req.json();
     const { session } = ctx.state;
 
-    const username: string = body.parsedBody?.username as string;
+    const username: string = body.username;
 
     if (!username) {
       const resp = {

@@ -1,5 +1,4 @@
 import { Handlers } from "$fresh/server.ts";
-import { json, ReqWithBody } from "parsec";
 import { token } from "utils/token.ts";
 import { database, IUser } from "database";
 import { WithSession } from "fresh_session";
@@ -7,9 +6,7 @@ import { WithSession } from "fresh_session";
 export type Data = { session: Record<string, string> };
 
 export const handler: Handlers<Data, WithSession> = {
-  async GET(req, ctx) {
-    const body: ReqWithBody = req;
-    await json(body);
+  async GET(_req, ctx) {
     const { session } = ctx.state;
 
     const loggedIn = await session.get("loggedIn");

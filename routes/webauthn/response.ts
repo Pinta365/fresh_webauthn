@@ -1,5 +1,4 @@
 import { Handlers } from "$fresh/server.ts";
-import { json, ReqWithBody } from "parsec";
 import { WithSession } from "fresh_session";
 import { config } from "base_config";
 import { database, IAuthenticator, IUser } from "database";
@@ -15,19 +14,18 @@ const f2l = new Fido2(
 );
 
 export type Data = { session: Record<string, string> };
+interface IRequestBody {
+  id: string,
+}
 
 export const handler: Handlers<Data, WithSession> = {
   async POST(req, ctx) {
-    const body: ReqWithBody = req;
-    await json(body);
+
     const { session } = ctx.state;
 
-    const id: string = body.parsedBody?.id as string;
-    const rawId: string = body.parsedBody?.rawId as string;
-    const response: string = body.parsedBody?.response as string;
-    const type: string = body.parsedBody?.type as string;
+    const requstBody = await req.json();
 
-    if (!id || !rawId || !response || !type || type !== "public-key") {
+    if (!requstBody?.id || !requstBody?.rawId || !requstBody?.response || !requstBody?.type || requstBody?.type !== "public-key") {
       const resp = {
         "status": "failed",
         "message":
@@ -41,17 +39,15 @@ export const handler: Handlers<Data, WithSession> = {
     const users = await database.getCollection<IUser>("users");
     const userInfo = await users.findOne({ userName: usernameClean });
 
-    const webauthnResp = body.parsedBody;
-
-    if (webauthnResp.response.attestationObject !== undefined) {
+    if (requstBody.response.attestationObject) {
       /* This is create cred */
-      webauthnResp.rawId = base64.toArrayBuffer(webauthnResp.rawId, true);
-      webauthnResp.response.attestationObject = base64.toArrayBuffer(
-        webauthnResp.response.attestationObject,
+      requstBody.rawId = base64.toArrayBuffer(requstBody.rawId, true);
+      requstBody.response.attestationObject = base64.toArrayBuffer(
+        requstBody.response.attestationObject,
         true,
       );
       const result = await f2l.attestation(
-        webauthnResp,
+        requstBody,
         config.origin,
         session.get("challenge"),
       );
@@ -59,8 +55,8 @@ export const handler: Handlers<Data, WithSession> = {
       const token: IAuthenticator = {
         credId: base64.fromArrayBuffer(result.authnrData.get("credId"), true),
         publicKey: result.authnrData.get("credentialPublicKeyPem"),
-        type: webauthnResp.type,
-        transports: webauthnResp.transports,
+        type: requstBody.type,
+        transports: requstBody.transports,
         counter: result.authnrData.get("counter"),
         created: new Date(),
       };
@@ -78,15 +74,15 @@ export const handler: Handlers<Data, WithSession> = {
 
       const resp = { "status": "ok" };
       return Response.json(resp);
-    } else if (webauthnResp.response.authenticatorData !== undefined) {
+    } else if (requstBody.response.authenticatorData !== undefined) {
       /* This is get assertion */
       //result = utils.verifyAuthenticatorAssertionResponse(webauthnResp, database.users[request.session.username].authenticators);
       // add allowCredentials to limit the number of allowed credential for the authentication process. For further details refer to webauthn specs: (https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialrequestoptions-allowcredentials).
       // save the challenge in the session information...
       // send authnOptions to client and pass them in to `navigator.credentials.get()`...
       // get response back from client (clientAssertionResponse)
-      webauthnResp.rawId = base64.toArrayBuffer(webauthnResp.rawId, true);
-      webauthnResp.response.userHandle = webauthnResp.rawId;
+      requstBody.rawId = base64.toArrayBuffer(requstBody.rawId, true);
+      requstBody.response.userHandle = requstBody.rawId;
 
       let winningAuthenticator;
       for (const authrIdx in userInfo.authenticators) {
@@ -102,7 +98,7 @@ export const handler: Handlers<Data, WithSession> = {
             userHandle: authr.credId,
           };
           const result = await f2l.assertion(
-            webauthnResp,
+            requstBody,
             assertionExpectations,
           );
 

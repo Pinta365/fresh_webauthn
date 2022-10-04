@@ -12,6 +12,7 @@
     "fido2lib": "https://deno.land/x/fido2@3.3.3/dist/main.js",
     "base_config": "./config.ts",
     "database": "./db/db.ts",
-    "utils/": "./utils/"
+    "utils/": "./utils/",
+    "@/": "./"
   }
 }

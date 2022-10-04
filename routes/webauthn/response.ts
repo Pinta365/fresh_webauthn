@@ -14,18 +14,17 @@ const f2l = new Fido2(
 );
 
 export type Data = { session: Record<string, string> };
-interface IRequestBody {
-  id: string,
-}
 
 export const handler: Handlers<Data, WithSession> = {
   async POST(req, ctx) {
-
     const { session } = ctx.state;
 
     const requstBody = await req.json();
 
-    if (!requstBody?.id || !requstBody?.rawId || !requstBody?.response || !requstBody?.type || requstBody?.type !== "public-key") {
+    if (
+      !requstBody?.id || !requstBody?.rawId || !requstBody?.response ||
+      !requstBody?.type || requstBody?.type !== "public-key"
+    ) {
       const resp = {
         "status": "failed",
         "message":

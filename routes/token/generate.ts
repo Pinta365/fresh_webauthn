@@ -9,7 +9,7 @@ export type Data = { session: Record<string, string> };
 export const handler: Handlers<Data, WithSession> = {
   async GET(req, ctx) {
     const body = req.json();
-    
+
     const { session } = ctx.state;
 
     if (!session.get("loggedIn")) {

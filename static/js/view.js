@@ -125,6 +125,7 @@ $("#button-generate-token").click(() => {
 });
 
 // Check if already logged in
+/*
 $(document).ready(() => {
   checkIfLoggedIn()
     .then((response) => {
@@ -132,3 +133,4 @@ $(document).ready(() => {
         return loadMainContainer()
     })
 })
+*/
